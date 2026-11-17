@@ -22,7 +22,10 @@ class MediaService {
       let errorMessage = "Failed to upload image";
       try {
         const errorData = await response.json();
-        errorMessage = errorData.error?.message || errorData.message || errorMessage;
+        errorMessage =
+          (typeof errorData.error === "string" ? errorData.error : errorData.error?.message) ||
+          errorData.message ||
+          errorMessage;
       } catch {
         // use default error message
       }

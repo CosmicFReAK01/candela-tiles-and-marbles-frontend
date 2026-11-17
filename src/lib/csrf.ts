@@ -11,16 +11,23 @@ const DEFAULT_ALLOWED_ORIGINS = [
   "http://127.0.0.1:3000",
   "http://localhost:3001",
   "http://127.0.0.1:3001",
+  "https://candela-tiles-and-marbles-frontend.vercel.app",
 ];
 
-export function getAllowedOrigins(): string[] {
+export function getAllowedOrigins(requestOrigin?: string): string[] {
   const list = [...DEFAULT_ALLOWED_ORIGINS];
+  if (requestOrigin) {
+    list.push(requestOrigin);
+  }
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (configured) {
     try {
       const u = new URL(configured);
       list.push(u.origin);
     } catch {}
+  }
+  if (process.env.VERCEL_URL) {
+    list.push(`https://${process.env.VERCEL_URL}`);
   }
   return Array.from(new Set(list));
 }
@@ -59,18 +66,36 @@ export function validateCsrfOrigin(request: NextRequest): { valid: boolean; reas
   // Cookie-authenticated state mutation: enforce origin match
   const origin = request.headers.get("origin");
   const referer = request.headers.get("referer");
-  const allowed = getAllowedOrigins();
+  const requestOrigin = request.nextUrl.origin;
+
+  // 1. Same-origin requests are naturally safe against CSRF
+  if (origin && origin === requestOrigin) {
+    return { valid: true };
+  }
+
+  if (referer) {
+    try {
+      if (new URL(referer).origin === requestOrigin) {
+        return { valid: true };
+      }
+    } catch {}
+  }
+
+  // 2. Allowed origins list (including localhost, Vercel production & preview domains)
+  const allowed = getAllowedOrigins(requestOrigin);
 
   if (origin) {
-    if (!allowed.includes(origin)) {
-      return { valid: false, reason: `Untrusted Origin: ${origin}` };
+    if (allowed.includes(origin) || origin.endsWith(".vercel.app")) {
+      return { valid: true };
     }
+    return { valid: false, reason: `Untrusted Origin: ${origin}` };
   } else if (referer) {
     try {
       const refOrigin = new URL(referer).origin;
-      if (!allowed.includes(refOrigin)) {
-        return { valid: false, reason: `Untrusted Referer: ${refOrigin}` };
+      if (allowed.includes(refOrigin) || refOrigin.endsWith(".vercel.app")) {
+        return { valid: true };
       }
+      return { valid: false, reason: `Untrusted Referer: ${refOrigin}` };
     } catch {
       return { valid: false, reason: "Malformed Referer header" };
     }
