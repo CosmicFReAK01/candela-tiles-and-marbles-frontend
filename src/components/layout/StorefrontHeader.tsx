@@ -38,7 +38,7 @@ export function StorefrontHeader() {
   const { compareCount } = useCompare();
   const { homePageCms } = useCandelaStore();
 
-  const phoneDisplay = homePageCms.phone || "+91 98201 44812";
+  const phoneDisplay = homePageCms.phone || "+91 70630 99602";
   const phoneTel = phoneDisplay.replace(/\s+/g, "");
 
   const [activeMenu, setActiveMenu] = useState<"shop" | "collections" | "explore" | null>(null);

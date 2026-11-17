@@ -151,10 +151,10 @@ export default function ContactPage() {
                 <span>Phone / WhatsApp</span>
               </div>
               <a
-                href="tel:+919820144812"
+                href="tel:+917063099602"
                 className="font-mono text-sm font-bold text-candela-text hover:text-candela-accent block"
               >
-                +91 98201 44812
+                +91 70630 99602
               </a>
               <span className="text-candela-secondary text-[11px] block">
                 Direct Trade & Project Desk
@@ -167,10 +167,10 @@ export default function ContactPage() {
                 <span>Email Enquiries</span>
               </div>
               <a
-                href="mailto:advisory@candelatiles.in"
+                href="mailto:candelafuture10@gmail.com"
                 className="font-mono text-xs text-candela-text hover:text-candela-accent block font-medium"
               >
-                advisory@candelatiles.in
+                candelafuture10@gmail.com
               </a>
               <span className="text-candela-secondary text-[11px] block">
                 BOQ Estimation & CAD Requests
@@ -302,7 +302,7 @@ export default function ContactPage() {
 
             <div className="pt-2 text-center">
               <a
-                href={`https://wa.me/919820144812?text=${whatsappMsg}`}
+                href={`https://wa.me/917063099602?text=${whatsappMsg}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-700 hover:underline"

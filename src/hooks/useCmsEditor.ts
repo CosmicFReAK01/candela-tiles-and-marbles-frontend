@@ -40,7 +40,7 @@ export function useCmsEditor() {
   const [heroDescription, setHeroDescription] = useState(homePageCms.heroDescription);
   const [heroBgImage, setHeroBgImage] = useState(homePageCms.heroBgImage);
   const [announcementText, setAnnouncementText] = useState(homePageCms.announcementText);
-  const [homePhone, setHomePhone] = useState(homePageCms.phone || "+91 98200 00000");
+  const [homePhone, setHomePhone] = useState(homePageCms.phone || "+91 70630 99602");
 
   const toggleHomeVisibility = (id: HomeBlockId) => {
     setHomeBlocks((prev) =>

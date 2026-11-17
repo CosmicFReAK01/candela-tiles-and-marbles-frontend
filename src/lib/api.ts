@@ -166,7 +166,7 @@ export function buildWhatsAppEnquiryUrl(
   referenceCode?: string
 ): string {
   const showroomPhone =
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919820000000";
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "917063099602";
 
   const lines = [
     `*CANDELA TILES & MARBLES — ARCHITECTURAL QUOTE REQUEST*`,

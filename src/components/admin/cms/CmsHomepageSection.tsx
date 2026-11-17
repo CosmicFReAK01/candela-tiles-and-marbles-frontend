@@ -105,7 +105,7 @@ export function CmsHomepageSection({ onToast }: Props) {
   );
 
   // Showroom & Phone
-  const [phone, setPhone] = useState(homePageCms.phone || "+91 98201 44812");
+  const [phone, setPhone] = useState(homePageCms.phone || "+91 70630 99602");
   const [bhiwandiAddress, setBhiwandiAddress] = useState(homePageCms.bhiwandiAddress || "");
   const [naviMumbaiAddress, setNaviMumbaiAddress] = useState(homePageCms.naviMumbaiAddress || "");
 

@@ -1099,15 +1099,15 @@ export function StorefrontHomeClient({
 
                 <div className="pt-2 flex flex-wrap gap-3">
                   <a
-                    href={`tel:${(homePageCms.phone || "+919820144812").replace(/\s+/g, "")}`}
+                    href={`tel:${(homePageCms.phone || "+917063099602").replace(/\s+/g, "")}`}
                     className="inline-flex items-center gap-2 border border-candela-border bg-candela-bg px-4 py-2.5 font-mono text-xs text-candela-text hover:border-candela-accent motion-safe:transition-colors"
                   >
                     <Phone className="h-3.5 w-3.5 text-candela-accent" aria-hidden="true" />
-                    <span>{homePageCms.phone || "+91 98201 44812"}</span>
+                    <span>{homePageCms.phone || "+91 70630 99602"}</span>
                   </a>
 
                   <a
-                    href="https://wa.me/919820144812"
+                    href="https://wa.me/917063099602"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-[#1A4D2E] px-4 py-2.5 font-mono text-xs text-white hover:bg-[#133A22] motion-safe:transition-colors"

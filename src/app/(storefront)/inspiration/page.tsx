@@ -127,7 +127,7 @@ export default function InspirationPage() {
                   </div>
 
                   <a
-                    href={`https://wa.me/919820144812?text=${waMessage}`}
+                    href={`https://wa.me/917063099602?text=${waMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-emerald-600 font-mono text-xs hover:underline font-semibold"

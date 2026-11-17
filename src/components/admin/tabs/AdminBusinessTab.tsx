@@ -7,8 +7,8 @@ import { Building2, Phone, Save, Check, AlertCircle } from "lucide-react";
 export function AdminBusinessTab() {
   const { homePageCms, updateHomePageCms } = useCandelaStore();
 
-  const [phone, setPhone] = useState(homePageCms.phone || "+91 98201 44812");
-  const [email, setEmail] = useState(homePageCms.email || "trade@candelasurfaces.com");
+  const [phone, setPhone] = useState(homePageCms.phone || "+91 70630 99602");
+  const [email, setEmail] = useState(homePageCms.email || "candelafuture10@gmail.com");
   const [bhiwandiAddress, setBhiwandiAddress] = useState(
     homePageCms.bhiwandiAddress ||
       "Plot 14, Architectural Stone Hub, Mumbai-Nashik Highway, Bhiwandi."

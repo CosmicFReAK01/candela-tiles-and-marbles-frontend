@@ -28,13 +28,13 @@ export default function StorefrontLayout({
             </p>
             <div className="pt-2 flex items-center gap-4 text-xs font-mono text-candela-accent">
               <a
-                href="https://wa.me/919820144812"
+                href="https://wa.me/917063099602"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 hover:underline"
               >
                 <MessageCircle className="h-4 w-4" />
-                <span>WhatsApp Advisory (+91 98201 44812)</span>
+                <span>WhatsApp Advisory (+91 70630 99602)</span>
               </a>
             </div>
           </div>

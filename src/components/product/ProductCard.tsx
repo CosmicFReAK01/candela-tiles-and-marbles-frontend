@@ -175,7 +175,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center gap-1">
           {/* WhatsApp Direct Inquiry */}
           <a
-            href={`https://wa.me/919820144812?text=${whatsappMessage}`}
+            href={`https://wa.me/917063099602?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             title="Enquire on WhatsApp"

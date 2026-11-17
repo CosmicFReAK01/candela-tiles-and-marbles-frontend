@@ -92,7 +92,7 @@ export function ProductDetailSlugContainer({
           </Link>
 
           <a
-            href={`https://wa.me/919820000000?text=${whatsappQuery}`}
+            href={`https://wa.me/917063099602?text=${whatsappQuery}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 border border-[#25D366]/40 bg-[#25D366]/10 px-6 py-3 font-mono text-xs uppercase tracking-wider text-[#25D366] hover:bg-[#25D366]/20 transition"

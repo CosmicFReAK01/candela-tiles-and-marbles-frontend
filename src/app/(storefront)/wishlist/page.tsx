@@ -90,7 +90,7 @@ export default function WishlistPage() {
             </button>
 
             <a
-              href={`https://wa.me/919820144812?text=${allWishlistWhatsAppMsg}`}
+              href={`https://wa.me/917063099602?text=${allWishlistWhatsAppMsg}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 bg-emerald-600 text-white px-4 py-2 text-xs font-mono uppercase font-semibold hover:bg-emerald-700 transition"

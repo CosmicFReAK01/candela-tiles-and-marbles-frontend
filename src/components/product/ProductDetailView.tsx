@@ -270,7 +270,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
             {/* WhatsApp Enquiry Direct CTA */}
             <div className="pt-1">
               <a
-                href={`https://wa.me/919820144812?text=${whatsappMessage}`}
+                href={`https://wa.me/917063099602?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 text-xs font-mono uppercase font-semibold transition shadow-sm"

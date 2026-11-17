@@ -141,7 +141,7 @@ export default function ComparePage() {
                           Add to BOQ
                         </button>
                         <a
-                          href={`https://wa.me/919820144812?text=${waMsg}`}
+                          href={`https://wa.me/917063099602?text=${waMsg}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           title="WhatsApp Enquiry"
