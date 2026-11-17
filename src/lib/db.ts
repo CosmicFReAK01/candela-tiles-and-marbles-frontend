@@ -1171,7 +1171,7 @@ export async function searchCatalogueInPostgres(searchTerm: string): Promise<{
     const productRows = await query(
       `
       SELECT *
-      FROM public.catalogue_products
+      FROM public.products
       WHERE COALESCE(status, 'published') = 'published'
         AND (
           name ILIKE $1 OR

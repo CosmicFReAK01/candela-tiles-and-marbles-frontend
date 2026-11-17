@@ -134,8 +134,14 @@ function CatalogueContent({
   // Filter products
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
-      // Exclude items without an updated image
-      if (!p.media?.primaryImage || p.media.primaryImage.trim() === "") return false;
+      // Verify product image presence (supports nested media, mainImageUrl or direct imageUrl)
+      const primaryImg =
+        p.media?.primaryImage ||
+        (p as any).mainImageUrl ||
+        (p as any).primary_image_url ||
+        (p as any).imageUrl ||
+        "";
+      if (!primaryImg || primaryImg.trim() === "") return false;
 
       // 1. Category match if route is scoped
       if (currentCategory) {

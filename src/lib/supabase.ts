@@ -44,7 +44,7 @@ export async function fetchProductsFromSupabase(): Promise<AdminProduct[] | null
 
   try {
     const { data, error } = await supabase
-      .from("catalogue_products")
+      .from("products")
       .select("*")
       .order("created_at", { ascending: false });
 

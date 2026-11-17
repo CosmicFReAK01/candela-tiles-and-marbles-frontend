@@ -200,7 +200,8 @@ export function CandelaStoreProvider({ children }: { children: React.ReactNode }
       fetch("/api/content/homepage", { cache: "no-store" })
         .then(async (res) => {
           if (!res.ok) return;
-          const cms = await res.json();
+          const rawCms = await res.json();
+          const cms = rawCms?.data || rawCms;
           const hero = cms?.hero;
           const liveCms = cms?.cms;
           if (!alive()) return;

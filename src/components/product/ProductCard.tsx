@@ -45,6 +45,16 @@ export function ProductCard({ product }: ProductCardProps) {
     `Hello Candela Tiles & Marbles,\n\nI am interested in:\nProduct: ${product.name}\nSKU: ${product.sku}\nDimensions: ${product.dimensionsMm}\n\nPlease share availability and project quotation.`
   );
 
+  const imageSrc =
+    product.media?.primaryImage ||
+    (product as any).mainImageUrl ||
+    (product as any).primary_image_url ||
+    (product as any).imageUrl ||
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80";
+
+  const stockSqft = product.stockSqftAvailable ?? ((product as any).stock_sqft_available ? Number((product as any).stock_sqft_available) : undefined);
+  const isAvailable = product.inStock !== false && ((stockSqft === undefined) || stockSqft > 0);
+
   return (
     <div className="group border border-candela-border bg-candela-surface flex flex-col justify-between transition-all duration-300 hover:border-candela-accent hover:shadow-xl relative">
       <div>
@@ -52,7 +62,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="relative h-64 w-full overflow-hidden bg-candela-dark/10">
           <Link href={`/product/${product.slug}`} className="block h-full w-full">
             <img
-              src={product.media.primaryImage}
+              src={imageSrc}
               alt={product.name}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
@@ -61,15 +71,32 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-candela-dark/80 via-transparent to-transparent pointer-events-none" />
 
           {/* Top badges */}
-          <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-            <div className="flex flex-col gap-1">
+          <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
+            <div className="flex flex-col gap-1.5 items-start">
               <span className="bg-candela-dark/90 backdrop-blur-sm px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-candela-bg border border-candela-border/20">
                 {product.masterCategory || product.category}
               </span>
+
+              {/* Live Database Stock Badge */}
+              {stockSqft !== undefined && stockSqft > 0 ? (
+                <span className="bg-emerald-950/90 backdrop-blur-sm px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-emerald-400 border border-emerald-500/30 flex items-center gap-1 shadow-sm">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  {stockSqft.toLocaleString("en-IN")}{" "}
+                  {product.masterCategory === "Tiles" || product.masterCategory === "Marbles" ? "sq.ft in stock" : "pcs in stock"}
+                </span>
+              ) : isAvailable ? (
+                <span className="bg-emerald-950/90 backdrop-blur-sm px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-emerald-400 border border-emerald-500/30">
+                  Ready in Depot
+                </span>
+              ) : (
+                <span className="bg-amber-950/90 backdrop-blur-sm px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-amber-400 border border-amber-500/30">
+                  Quarry Lot On Order
+                </span>
+              )}
             </div>
 
             <div className="flex items-center gap-1.5">
-              {(product.media.glbModelUrl || (product.media.frames360Urls && product.media.frames360Urls.length > 0)) && (
+              {(product.media?.glbModelUrl || (product.media?.frames360Urls && product.media.frames360Urls.length > 0)) && (
                 <Link
                   href={`/product/${product.slug}#view360`}
                   title="Interactive 360° View Available"
@@ -152,6 +179,16 @@ export function ProductCard({ product }: ProductCardProps) {
                 {product.brand}
               </span>
             )}
+          </div>
+
+          {/* Stock Level & Warehouse Zone Bar */}
+          <div className="flex items-center justify-between text-[10px] font-mono border-t border-candela-border/40 pt-2 text-candela-secondary">
+            <span className="truncate max-w-[55%]">{product.warehouseZone || "Bhiwandi Central Depot"}</span>
+            <span className={stockSqft !== undefined && stockSqft > 0 ? "text-emerald-600 font-semibold shrink-0" : "text-candela-secondary shrink-0"}>
+              {stockSqft !== undefined && stockSqft > 0
+                ? `${stockSqft.toLocaleString("en-IN")} ${product.masterCategory === "Tiles" || product.masterCategory === "Marbles" ? "sq.ft" : "pcs"} Lot`
+                : isAvailable ? "Lot In Yard" : "Pre-Order"}
+            </span>
           </div>
         </div>
       </div>
