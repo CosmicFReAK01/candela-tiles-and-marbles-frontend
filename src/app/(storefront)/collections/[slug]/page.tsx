@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import {
   fetchStorefrontCollections,
   fetchStorefrontProducts,
+  DEFAULT_STOREFRONT_COLLECTIONS,
 } from "@/lib/storefront-data";
 import { CollectionProductGrid } from "@/components/collection/CollectionProductGrid";
 
@@ -18,10 +18,17 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const collections = await fetchStorefrontCollections();
-  const collection = collections.find(
-    (c) => c.slug.toLowerCase() === params.slug.toLowerCase()
-  );
-  if (!collection) return { title: "Collection | CANDELA" };
+  const collection =
+    collections.find((c) => c.slug.toLowerCase() === params.slug.toLowerCase()) ||
+    DEFAULT_STOREFRONT_COLLECTIONS.find((c) => c.slug.toLowerCase() === params.slug.toLowerCase());
+
+  if (!collection) {
+    const formatted = params.slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+    return { title: `${formatted} Collection | CANDELA TILES & MARBLES` };
+  }
 
   return {
     title: `${collection.title || collection.name} | CANDELA TILES & MARBLES`,
@@ -35,10 +42,31 @@ export default async function CollectionDetailPage({ params }: PageProps) {
     fetchStorefrontProducts(),
   ]);
 
-  const collection = collections.find(
-    (c) => c.slug.toLowerCase() === params.slug.toLowerCase()
-  );
-  if (!collection) notFound();
+  const collection =
+    collections.find((c) => c.slug.toLowerCase() === params.slug.toLowerCase()) ||
+    DEFAULT_STOREFRONT_COLLECTIONS.find((c) => c.slug.toLowerCase() === params.slug.toLowerCase()) || {
+      id: `col-${params.slug}`,
+      name:
+        params.slug
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ") + " Collection",
+      title:
+        params.slug
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ") + " Collection",
+      slug: params.slug,
+      description: "Curated architectural stone, monolithic slabs, and designer surfaces.",
+      cover_image_url:
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
+      imageUrl:
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
+      display_order: 99,
+      is_published: true,
+      product_count: 0,
+      itemCount: 0,
+    };
 
   const initialMatchingProducts = allProducts.filter(
     (p) =>
