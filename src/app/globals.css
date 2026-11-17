@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #F8F5F0;
+  --bg-surface: #EDEBE6;
+  --text-primary: #1A1A1A;
+  --text-secondary: #5C5A55;
+  --accent-bronze: #8B6914;
+  --bg-dark: #2A2825;
+  --border-muted: #D4D0C8;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Storefront & Atelier Console Editorial Serif headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-editorial {
+    font-family: var(--font-cormorant), serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* =========================================================================
+   Atelier Admin Console — Unified Candela Editorial Tokens
+   ========================================================================= */
+.admin-console {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Ensure ALL text in admin console is selectable and copyable */
+.admin-console,
+.admin-console * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+.admin-console ::selection {
+  background-color: #8B6914 !important;
+  color: #FFFFFF !important;
+}
+
+.admin-console .font-heading {
+  font-family: var(--font-cormorant), serif;
+  letter-spacing: -0.015em;
+}
+
+.admin-console .font-mono {
+  font-family: var(--font-jetbrains), "SF Mono", Monaco, Consolas, monospace;
+}
+
+.admin-console th {
+  font-weight: 600;
+  font-size: 11px;
+}
+
+/* Custom subtle scrollbars for architectural feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-muted);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-bronze);
+}
