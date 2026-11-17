@@ -56,16 +56,22 @@ export async function backendFetch<T = unknown>(
     clearTimeout(timeoutId);
 
     const text = await res.text();
-    let parsed: T | null = null;
+    let parsed: any = null;
     try {
-      parsed = JSON.parse(text) as T;
+      parsed = JSON.parse(text);
     } catch {
       // Raw string or non-JSON response
     }
 
+    // Unpack Spring Boot ApiResponse wrapper ({ success: true, data: ... }) if present
+    let finalData: T | null = parsed;
+    if (parsed && typeof parsed === "object" && "data" in parsed && "success" in parsed) {
+      finalData = parsed.data as T;
+    }
+
     return {
       status: res.status,
-      data: parsed,
+      data: finalData,
       headers: res.headers,
       rawBody: text,
     };

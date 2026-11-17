@@ -11,11 +11,11 @@ export function AdminBusinessTab() {
   const [email, setEmail] = useState(homePageCms.email || "candelafuture10@gmail.com");
   const [bhiwandiAddress, setBhiwandiAddress] = useState(
     homePageCms.bhiwandiAddress ||
-      "Plot 14, Architectural Stone Hub, Mumbai-Nashik Highway, Bhiwandi."
+    "Plot 14, Architectural Stone Hub, Mumbai-Nashik Highway, Bhiwandi."
   );
   const [naviMumbaiAddress, setNaviMumbaiAddress] = useState(
     homePageCms.naviMumbaiAddress ||
-      "Plot 22, MIDC Industrial Area, Turbhe, Navi Mumbai."
+    "Plot 22, MIDC Industrial Area, Turbhe, Navi Mumbai."
   );
   const [openingHours, setOpeningHours] = useState(
     homePageCms.openingHours || "Mon – Sat: 10:00 AM – 7:30 PM (Sun by Appointment)"

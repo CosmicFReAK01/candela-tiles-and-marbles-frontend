@@ -136,9 +136,10 @@ function mapProductDtoToAdminProduct(dto: ProductDto): AdminProduct {
 
 export async function fetchStorefrontProducts(): Promise<AdminProduct[]> {
   try {
-    const res = await backendFetch<ProductDto[]>("/api/v1/products", { timeoutMs: 6000 });
-    if (res.status === 200 && Array.isArray(res.data)) {
-      return res.data.map(mapProductDtoToAdminProduct);
+    const res = await backendFetch<ProductDto[]>("/api/v1/products", { timeoutMs: 12000 });
+    const list = (res.data as any)?.data ?? res.data;
+    if (res.status === 200 && Array.isArray(list)) {
+      return list.map(mapProductDtoToAdminProduct);
     }
   } catch (err) {
     // Monolith cold-start or network latency
@@ -148,9 +149,10 @@ export async function fetchStorefrontProducts(): Promise<AdminProduct[]> {
 
 export async function fetchStorefrontProductBySlug(slug: string): Promise<AdminProduct | null> {
   try {
-    const res = await backendFetch<ProductDto>(`/api/v1/products/${encodeURIComponent(slug)}`, { timeoutMs: 6000 });
-    if (res.status === 200 && res.data) {
-      return mapProductDtoToAdminProduct(res.data);
+    const res = await backendFetch<ProductDto>(`/api/v1/products/${encodeURIComponent(slug)}`, { timeoutMs: 12000 });
+    const item = (res.data as any)?.data ?? res.data;
+    if (res.status === 200 && item && item.id) {
+      return mapProductDtoToAdminProduct(item);
     }
   } catch (err) {
     // Return null on 404 or backend unavailable
@@ -158,11 +160,193 @@ export async function fetchStorefrontProductBySlug(slug: string): Promise<AdminP
   return null;
 }
 
+export const DEFAULT_STOREFRONT_COLLECTIONS: StorefrontCollection[] = [
+  {
+    id: "col-premium",
+    name: "Premium Collection",
+    title: "Premium Collection",
+    slug: "premium",
+    description: "Hand-selected monolithic slabs from legacy European quarries with rare geologic formations.",
+    cover_image_url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
+    display_order: 1,
+    is_published: true,
+    product_count: 3,
+    itemCount: 3,
+  },
+  {
+    id: "col-luxury",
+    name: "Luxury Collection",
+    title: "Luxury Collection",
+    slug: "luxury",
+    description: "Dramatic statement bookmatches and opulent crystalline marbles for grand residences.",
+    cover_image_url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85",
+    display_order: 2,
+    is_published: true,
+    product_count: 2,
+    itemCount: 2,
+  },
+  {
+    id: "col-modern",
+    name: "Modern Collection",
+    title: "Modern Collection",
+    slug: "modern",
+    description: "Clean lines, subtle textural relief, and minimal architectural palettes.",
+    cover_image_url: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=85",
+    display_order: 3,
+    is_published: true,
+    product_count: 2,
+    itemCount: 2,
+  },
+  {
+    id: "col-natural",
+    name: "Natural Collection",
+    title: "Natural Collection",
+    slug: "natural",
+    description: "Organic travertine, split-face slate, and honed limestone for biophilic sanctuaries.",
+    cover_image_url: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=85",
+    display_order: 4,
+    is_published: true,
+    product_count: 0,
+    itemCount: 0,
+  },
+  {
+    id: "col-classic",
+    name: "Classic Collection",
+    title: "Classic Collection",
+    slug: "classic",
+    description: "Enduring Statuario, Botticino, and timeless neoclassical stones.",
+    cover_image_url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=85",
+    display_order: 5,
+    is_published: true,
+    product_count: 0,
+    itemCount: 0,
+  },
+  {
+    id: "col-new-arrivals",
+    name: "New Arrivals",
+    title: "New Arrivals",
+    slug: "new-arrivals",
+    description: "The latest 2026 quarry shipments and technological porcelain surfaces.",
+    cover_image_url: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=85",
+    display_order: 6,
+    is_published: true,
+    product_count: 0,
+    itemCount: 0,
+  },
+  {
+    id: "col-best-sellers",
+    name: "Best Sellers",
+    title: "Best Sellers",
+    slug: "best-sellers",
+    description: "The most specified surfaces by leading Indian architectural firms with verified durability.",
+    cover_image_url: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1600&q=85",
+    imageUrl: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1600&q=85",
+    display_order: 7,
+    is_published: true,
+    product_count: 1,
+    itemCount: 1,
+  },
+];
+
+export const DEFAULT_STOREFRONT_CATEGORIES: StorefrontCategory[] = [
+  {
+    id: "cat-tiles",
+    name: "Tiles",
+    title: "Tiles",
+    slug: "tiles",
+    description: "Full-body porcelain, glazed vitrified tiles, large-format slabs, and anti-skid surfaces.",
+    image_url: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1200&q=80",
+    display_order: 1,
+    product_count: 8,
+    itemCount: 8,
+  },
+  {
+    id: "cat-marbles",
+    name: "Marbles",
+    title: "Marbles",
+    slug: "marbles",
+    description: "Quarry-selected natural marble bundles, bookmatched Italian Statuario, Calacatta Viola, Travertino.",
+    image_url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    display_order: 2,
+    product_count: 6,
+    itemCount: 6,
+  },
+  {
+    id: "cat-sanitaryware",
+    name: "Sanitaryware",
+    title: "Sanitaryware",
+    slug: "sanitaryware",
+    description: "Rimless wall-hung WCs, monolithic freestanding stone basins, countertop vessel sinks.",
+    image_url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
+    display_order: 3,
+    product_count: 4,
+    itemCount: 4,
+  },
+  {
+    id: "cat-faucets",
+    name: "Faucets",
+    title: "Faucets",
+    slug: "faucets",
+    description: "Tall basin mixers, wall-mounted concealed spouts, and thermostatic controls in brushed bronze.",
+    image_url: "https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?auto=format&fit=crop&w=1200&q=80",
+    display_order: 4,
+    product_count: 4,
+    itemCount: 4,
+  },
+  {
+    id: "cat-showers",
+    name: "Showers",
+    title: "Showers",
+    slug: "showers",
+    description: "Ceiling-recessed rain and waterfall heads, thermostatic multi-way concealed diverters.",
+    image_url: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=1200&q=80",
+    display_order: 5,
+    product_count: 4,
+    itemCount: 4,
+  },
+  {
+    id: "cat-hardware",
+    name: "Hardware",
+    title: "Hardware",
+    slug: "hardware",
+    description: "Diamond-knurled solid brass door levers, linear kitchen pull bars, concealed architectural hinges.",
+    image_url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80",
+    display_order: 6,
+    product_count: 5,
+    itemCount: 5,
+  },
+  {
+    id: "cat-accessories",
+    name: "Bathroom Accessories",
+    title: "Bathroom Accessories",
+    slug: "bathroom-accessories",
+    description: "Solid brass towel rails, minimalist robe hooks, backlit architectural vanity mirrors.",
+    image_url: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1200&q=80",
+    display_order: 7,
+    product_count: 4,
+    itemCount: 4,
+  },
+];
+
 export async function fetchStorefrontCollections(): Promise<StorefrontCollection[]> {
   try {
-    const res = await backendFetch<CollectionDto[]>("/api/v1/collections", { timeoutMs: 6000 });
-    if (res.status === 200 && Array.isArray(res.data)) {
-      return res.data.map((c) => ({
+    const res = await backendFetch<CollectionDto[]>("/api/v1/collections", { timeoutMs: 12000 });
+    const list = (res.data as any)?.data ?? res.data;
+    if (res.status === 200 && Array.isArray(list) && list.length > 0) {
+      return list.map((c: any) => ({
         id: c.id,
         name: c.name,
         title: c.name,
@@ -179,14 +363,15 @@ export async function fetchStorefrontCollections(): Promise<StorefrontCollection
   } catch (err) {
     // Cold-start fallback
   }
-  return [];
+  return DEFAULT_STOREFRONT_COLLECTIONS;
 }
 
 export async function fetchStorefrontCategories(): Promise<StorefrontCategory[]> {
   try {
-    const res = await backendFetch<CategoryDto[]>("/api/v1/categories", { timeoutMs: 6000 });
-    if (res.status === 200 && Array.isArray(res.data)) {
-      return res.data.map((c) => ({
+    const res = await backendFetch<CategoryDto[]>("/api/v1/categories", { timeoutMs: 12000 });
+    const list = (res.data as any)?.data ?? res.data;
+    if (res.status === 200 && Array.isArray(list) && list.length > 0) {
+      return list.map((c: any) => ({
         id: c.id,
         name: c.name,
         title: c.name,
@@ -202,7 +387,7 @@ export async function fetchStorefrontCategories(): Promise<StorefrontCategory[]>
   } catch (err) {
     // Cold-start fallback
   }
-  return [];
+  return DEFAULT_STOREFRONT_CATEGORIES;
 }
 
 export async function fetchStorefrontHomepageCms(): Promise<{ cms: HomePageCmsData; fallback: boolean }> {
@@ -215,10 +400,10 @@ export async function fetchStorefrontHomepageCms(): Promise<{ cms: HomePageCmsDa
       imageUrl: string;
       ctaText: string;
       ctaUrl: string;
-    }>>("/api/v1/content/homepage", { timeoutMs: 6000 });
+    }>>("/api/v1/content/homepage", { timeoutMs: 12000 });
 
-    if (res.status === 200 && res.data) {
-      const byKey = res.data;
+    const byKey: any = (res.data as any)?.data ?? res.data;
+    if (res.status === 200 && byKey && typeof byKey === "object") {
       const hero = byKey["hero"];
       const announcement = byKey["announcement"];
       const spotlight = byKey["spotlight"];

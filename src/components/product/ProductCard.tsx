@@ -85,11 +85,10 @@ export function ProductCard({ product }: ProductCardProps) {
                 type="button"
                 onClick={handleToggleCompare}
                 title={isCompared ? "Remove from comparison" : "Add to comparison (Max 4)"}
-                className={`p-1.5 rounded-full backdrop-blur-md transition ${
-                  isCompared
-                    ? "bg-candela-accent text-white"
-                    : "bg-candela-dark/60 text-white hover:bg-candela-dark"
-                }`}
+                className={`p-1.5 rounded-full backdrop-blur-md transition ${isCompared
+                  ? "bg-candela-accent text-white"
+                  : "bg-candela-dark/60 text-white hover:bg-candela-dark"
+                  }`}
               >
                 <SlidersHorizontal className="h-3.5 w-3.5" />
               </button>
@@ -99,11 +98,10 @@ export function ProductCard({ product }: ProductCardProps) {
                 type="button"
                 onClick={handleToggleWishlist}
                 title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                className={`p-1.5 rounded-full backdrop-blur-md transition ${
-                  isWishlisted
-                    ? "bg-red-500 text-white"
-                    : "bg-candela-dark/60 text-white hover:bg-candela-dark"
-                }`}
+                className={`p-1.5 rounded-full backdrop-blur-md transition ${isWishlisted
+                  ? "bg-red-500 text-white"
+                  : "bg-candela-dark/60 text-white hover:bg-candela-dark"
+                  }`}
               >
                 <Heart className={`h-3.5 w-3.5 ${isWishlisted ? "fill-current" : ""}`} />
               </button>
